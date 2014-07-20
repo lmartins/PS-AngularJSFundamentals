@@ -5,6 +5,8 @@
 
 var eventsApp = angular.module('eventsApp', ['ngSanitize']);
 require('./controllers/EventController');
+require('./controllers/EditEventController');
+require('./filters');
 
 
 // var HelloController = function ($scope) {

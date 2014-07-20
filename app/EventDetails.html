@@ -13,7 +13,7 @@
     <div class="navbar navbar-default">
       <div class="navbar-inner">
         <ul class="nav">
-          <li>a</li>
+          <li><a href="newEvent.html">New Event</a></li>
         </ul>
       </div>
     </div>
@@ -63,7 +63,7 @@
             </div>
             <h4>{{ session.name }}</h4>
             <h6>{{ session.creatorName }}</h6>
-            <span>Duration: {{ session.duration }}</span>
+            <span>Duration: {{ session.duration | durations }}</span>
             <span>Level: {{ session.level }}</span>
             <p>{{ session.abstract }}</p>
           </li>
@@ -75,9 +75,9 @@
 
   </div>
 
-  <script src="../bower_components/angular/angular.js"></script>
-  <script src="../bower_components/angular-resource/angular-resource.js"></script>
-  <script src="../bower_components/angular-route/angular-route.js"></script>
+  <script src="//cdn.jsdelivr.net/angularjs/1.2.20/angular.min.js"></script>
+  <script src="//cdn.jsdelivr.net/angularjs/1.2.20/angular-resource.min.js"></script>
+  <script src="//cdn.jsdelivr.net/angularjs/1.2.20/angular-route.min.js"></script>
   <script src="//cdn.jsdelivr.net/angularjs/1.2.20/angular-sanitize.min.js"></script>
   <script src="js/main.bundle.js"></script>
 

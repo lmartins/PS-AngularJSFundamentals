@@ -1,6 +1,6 @@
 /*!
  * AngularJSFundamentals
- * 0.1.0:1405870315724 [development build]
+ * 0.1.0:1405887303283 [development build]
  */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -55,6 +55,8 @@
 	
 	var eventsApp = angular.module('eventsApp', ['ngSanitize']);
 	__webpack_require__(1);
+	__webpack_require__(2);
+	__webpack_require__(3);
 	
 	
 	// var HelloController = function ($scope) {
@@ -76,7 +78,7 @@
 	  function EventController( $scope ) {
 	
 	    $scope.sortorder = '-upVoteCount';
-	
+	 
 	    $scope.event = {
 	      name: 'Angular Boot Camp',
 	      date: '2014-07-20',
@@ -91,7 +93,7 @@
 	        {
 	          name: 'Scopes for fun and profit',
 	          creatorName: 'John Doe',
-	          duration: '30 mins',
+	          duration: 1,
 	          level: 'Introductory',
 	          abstract: 'In this session you will leanr the ins and outs of directives!',
 	          upVoteCount: 0
@@ -99,8 +101,16 @@
 	        {
 	          name: 'Directives Masterclass',
 	          creatorName: 'Bob Smith',
-	          duration: '1 hr',
+	          duration: 2,
 	          level: 'Advanced',
+	          abstract: 'In this session you will leanr the ins and outs of directives!',
+	          upVoteCount: 2
+	        },
+	        {
+	          name: 'Well behaved controllers',
+	          creatorName: 'Jane Doe',
+	          duration: 4,
+	          level: 'Intermediate',
 	          abstract: 'In this session you will leanr the ins and outs of directives!',
 	          upVoteCount: 2
 	        }
@@ -127,6 +137,54 @@
 	// };
 	//
 	// app.controller('HelloController', ['$scope', HelloController]);
+
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var eventsApp = angular.module('eventsApp');
+	
+	eventsApp.controller('EditEventController',
+	  function EditEventController( $scope ) {
+	
+	    $scope.saveEvent = function (event, newEventForm) {
+	      console.log(newEventForm);
+	      if (newEventForm.$valid) {
+	        console.log("Evento " + event.name + " guardado.");
+	      }
+	    }
+	    $scope.cancelEdit = function () {
+	      window.location = './EventDetails.html';
+	    }
+	  }
+	);
+
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var eventsApp = angular.module('eventsApp');
+	
+	eventsApp.filter('durations', function () {
+	  return function (duration) {
+	    switch (duration) {
+	    case 1:
+	      return 'Half Hour'
+	    case 2:
+	      return '1 Hour'
+	    case 3:
+	      return 'Half Day'
+	    case 2:
+	      return 'Full Day'
+	    }
+	  }
+	})
 
 
 /***/ }
