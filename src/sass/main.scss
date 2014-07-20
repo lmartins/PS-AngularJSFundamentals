@@ -18,3 +18,8 @@ body{
   border-radius: 0.3em;
   margin-bottom: 1.5em;
 }
+
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}

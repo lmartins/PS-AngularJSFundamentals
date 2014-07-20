@@ -3,7 +3,7 @@
 // var angular = require('angular');
 // require('angular-route');
 
-var eventsApp = angular.module('eventsApp', []);
+var eventsApp = angular.module('eventsApp', ['ngSanitize']);
 require('./controllers/EventController');
 
 
