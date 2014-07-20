@@ -33,10 +33,10 @@ var config = {
 // SERVER ---------------------------------------------------------------------
 gulp.task('browser-sync', function() {
   browserSync({
-    // server: {
-    //   baseDir: "./"
-    // },
-    proxy: "192.168.1.3:8000",
+    server: {
+      baseDir: "./"
+    },
+    // proxy: "192.168.1.3:8000",
     browser: "google chrome",
     online: true
   });

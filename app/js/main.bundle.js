@@ -1,6 +1,6 @@
 /*!
  * AngularJSFundamentals
- * 0.1.0:1405854473869 [development build]
+ * 0.1.0:1405867714826 [development build]
  */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -60,7 +60,7 @@
 	// var HelloController = function ($scope) {
 	//   $scope.message = 'Hello World!';
 	// };
-	//
+	
 	// app.controller('HelloController', ['$scope', HelloController]);
 
 
@@ -78,7 +78,20 @@
 	    $scope.event = {
 	      name: 'Angular Boot Camp',
 	      date: '2014-07-20',
-	      time: '10:30am'
+	      time: '10:30am',
+	      location: {
+	        address: 'Google Headquarters',
+	        city: 'Mountain VIew',
+	        province: 'CA'
+	      },
+	      sessions: [
+	        {
+	          name: 'Directives Masterclass'
+	        },
+	        {
+	          name: 'Scopes for fun and profit'
+	        }
+	      ]
 	    }
 	
 	  }

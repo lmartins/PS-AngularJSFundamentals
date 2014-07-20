@@ -10,5 +10,5 @@ require('./controllers/EventController');
 // var HelloController = function ($scope) {
 //   $scope.message = 'Hello World!';
 // };
-//
+
 // app.controller('HelloController', ['$scope', HelloController]);
