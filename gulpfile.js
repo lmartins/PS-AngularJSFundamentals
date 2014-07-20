@@ -14,18 +14,18 @@ var config = {
 
   JS: {
     src: ["src/js/**/*.js"],
-    build: "build/js/",
-    buildFiles: "build/js/*.js"
+    build: "app/js/",
+    buildFiles: "app/js/*.js"
   },
 
   HTML:{
     // src: ['pages/**/*.hbs']
-    build: "./pages/**/*.html"
+    build: "./app/**/*.html"
   },
 
   SASS: {
     src: "src/sass/**/*.scss",
-    build: "build/css/"
+    build: "app/css/"
   }
 
 }
@@ -33,10 +33,10 @@ var config = {
 // SERVER ---------------------------------------------------------------------
 gulp.task('browser-sync', function() {
   browserSync({
-    server: {
-      baseDir: "./"
-    },
-    // proxy: "192.168.1.3:8000",
+    // server: {
+    //   baseDir: "./"
+    // },
+    proxy: "192.168.1.3:8000",
     browser: "google chrome",
     online: true
   });
@@ -89,7 +89,7 @@ var webpackConfig = {
     path: config.JS.build ,
     filename: '[name].bundle.js',
     chunkFilename: '[id].chunk.js',
-    publicPath: '/build/js/',
+    publicPath: '/app/js/',
   },
   module:{
     loaders: [
@@ -107,6 +107,7 @@ var webpackConfig = {
   externals: {
     // require("jquery") is external and available
     //  on the global var jQuery
+    "angular": "angular",
     "jquery": "jQuery"
   }
 

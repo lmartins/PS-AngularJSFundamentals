@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="eventsApp">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/3.2.0/css/bootstrap-theme.css">
+  <link rel="stylesheet" href="css/main.css" >
+</head>
+<body>
+  <div class="container">
+    <div ng-controller="EventController">
+      {{ event.name }} <br>
+      {{ event.date }} <br>
+      {{ event.time }}
+    </div>
+  </div>
+
+  <script src="../bower_components/angular/angular.js"></script>
+  <script src="../bower_components/angular-resource/angular-resource.js"></script>
+  <script src="../bower_components/angular-route/angular-route.js"></script>
+  <script src="js/main.bundle.js"></script>
+
+</body>
+</html>

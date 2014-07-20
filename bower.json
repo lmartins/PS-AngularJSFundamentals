@@ -3,6 +3,7 @@
   "name": "tuts",
   "version": "0.1.0",
   "dependencies": {
-    "angular-route": "~1.2.20"
+    "angular-route": "~1.2.20",
+    "angular-resource": "~1.2.20"
   }
 }
