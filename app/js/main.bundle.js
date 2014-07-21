@@ -1,6 +1,6 @@
 /*!
  * AngularJSFundamentals
- * 0.1.0:1405887303283 [development build]
+ * 0.1.0:1405976333014 [development build]
  */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -57,6 +57,7 @@
 	__webpack_require__(1);
 	__webpack_require__(2);
 	__webpack_require__(3);
+	__webpack_require__(4);
 	
 	
 	// var HelloController = function ($scope) {
@@ -75,47 +76,11 @@
 	var eventsApp = angular.module('eventsApp');
 	
 	eventsApp.controller('EventController',
-	  function EventController( $scope ) {
+	  function EventController( $scope, eventData ) {
 	
 	    $scope.sortorder = '-upVoteCount';
-	 
-	    $scope.event = {
-	      name: 'Angular Boot Camp',
-	      date: '2014-07-20',
-	      time: '10:30am',
-	      location: {
-	        address: 'Google Headquarters',
-	        city: 'Mountain VIew',
-	        province: 'CA'
-	      },
-	      imageUrl: 'img/angularjs-logo.png',
-	      sessions: [
-	        {
-	          name: 'Scopes for fun and profit',
-	          creatorName: 'John Doe',
-	          duration: 1,
-	          level: 'Introductory',
-	          abstract: 'In this session you will leanr the ins and outs of directives!',
-	          upVoteCount: 0
-	        },
-	        {
-	          name: 'Directives Masterclass',
-	          creatorName: 'Bob Smith',
-	          duration: 2,
-	          level: 'Advanced',
-	          abstract: 'In this session you will leanr the ins and outs of directives!',
-	          upVoteCount: 2
-	        },
-	        {
-	          name: 'Well behaved controllers',
-	          creatorName: 'Jane Doe',
-	          duration: 4,
-	          level: 'Intermediate',
-	          abstract: 'In this session you will leanr the ins and outs of directives!',
-	          upVoteCount: 2
-	        }
-	      ]
-	    };
+	
+	    $scope.event = eventData.event;
 	
 	    $scope.upVoteSession = function (session) {
 	      session.upVoteCount++;
@@ -185,6 +150,57 @@
 	    }
 	  }
 	})
+
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	var eventsApp = angular.module('eventsApp');
+	
+	eventsApp.factory('eventData', function() {
+	  return {
+	    event: {
+	      name: 'Angular Boot Camp',
+	      date: '2014-07-20',
+	      time: '10:30am',
+	      location: {
+	        address: 'Google Headquarters',
+	        city: 'Mountain VIew',
+	        province: 'CA'
+	      },
+	      imageUrl: 'img/angularjs-logo.png',
+	      sessions: [
+	        {
+	          name: 'Scopes for fun and profit',
+	          creatorName: 'John Doe',
+	          duration: 1,
+	          level: 'Introductory',
+	          abstract: 'In this session you will leanr the ins and outs of directives!',
+	          upVoteCount: 0
+	        },
+	        {
+	          name: 'Directives Masterclass',
+	          creatorName: 'Bob Smith',
+	          duration: 2,
+	          level: 'Advanced',
+	          abstract: 'In this session you will leanr the ins and outs of directives!',
+	          upVoteCount: 2
+	        },
+	        {
+	          name: 'Well behaved controllers',
+	          creatorName: 'Jane Doe',
+	          duration: 4,
+	          level: 'Intermediate',
+	          abstract: 'In this session you will leanr the ins and outs of directives!',
+	          upVoteCount: 2
+	        }
+	      ]
+	    }
+	
+	  };
+	});
 
 
 /***/ }
