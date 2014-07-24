@@ -1,6 +1,6 @@
 /*!
  * AngularJSFundamentals
- * 0.1.0:1406222475296 [development build]
+ * 0.1.0:1406235397481 [development build]
  */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -63,9 +63,10 @@
 	__webpack_require__(3);
 	__webpack_require__(4);
 	__webpack_require__(5);
-	
 	__webpack_require__(6);
+	
 	__webpack_require__(7);
+	__webpack_require__(8);
 	
 	
 	// var HelloController = function ($scope) {
@@ -192,6 +193,24 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
+	var eventsApp = angular.module('eventsApp');
+	
+	eventsApp.controller('CompileSampleController',
+	  function CompileSampleController ($scope, $compile) {
+	    
+	    $scope.appendDivToElement = function(markup) {
+	      return $compile(markup)($scope).appendTo( angular.element('#appendHere') );
+	    } 
+	    
+	  }
+	);
+
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
 	
 	var eventsApp = angular.module('eventsApp');
 	
@@ -212,7 +231,7 @@
 
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -236,7 +255,7 @@
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

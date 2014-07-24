@@ -12,6 +12,7 @@ require('./controllers/EventController');
 require('./controllers/EditEventController');
 require('./controllers/EditProfileController');
 require('./controllers/CacheSampleController');
+require('./controllers/CompileSampleController');
 require('./filters');
 
 require('./services/EventData');
