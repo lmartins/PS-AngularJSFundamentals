@@ -3,12 +3,15 @@
 var eventsApp = angular.module('eventsApp');
 
 eventsApp.controller('EditEventController',
-  function EditEventController( $scope ) {
+  function EditEventController( $scope, eventData ) {
 
     $scope.saveEvent = function (event, newEventForm) {
-      console.log(newEventForm);
       if (newEventForm.$valid) {
-        console.log("Evento " + event.name + " guardado.");
+        eventData.save(event)
+          .$promise.then(
+            function (response) { console.log('success', response) },
+            function (response) { console.log('failure', response) }
+          )
       }
     }
     $scope.cancelEdit = function () {

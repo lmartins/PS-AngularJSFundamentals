@@ -3,23 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/3.2.0/css/bootstrap-theme.css" >
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/3.2.0/css/bootstrap.min.css" >
+  <link rel="stylesheet" href="css/app.css" >
   <link rel="stylesheet" href="css/main.css" >
+  <link rel="stylesheet" href="css/bootstrap.min.css" >
 </head>
 <body ng-cloak ng-controller="EventController">
 
   <div class="container">
-    <div class="navbar navbar-default">
-      <div class="navbar-inner">
-        <ul class="nav">
-          <li><a href="newEvent.html">New Event</a></li>
-        </ul>
-      </div>
+    <div class="navbar">
+        <div class="navbar-inner">
+            <ul class="nav">
+                <li><a href="newEvent.html">Create Event</a></li>
+            </ul>
+        </div>
     </div>
 
     <div class="row">
       <h2 ng-bind-template="{{event.name}} {{ event.date}}"></h2>
+      <button type="button" class="btn btn-primary" ng-click="scrollToSession()">Scroll</button>
       <div class="col-md-4">
         <p>{{ event.date }}</p>
         <p>{{ event.time }}</p>
@@ -47,7 +48,7 @@
           <option value="advanced">Advanced</option>
         </select>
         <ul class="thumbnails">
-          <li ng-repeat="session in event.sessions | orderBy:sortorder | filter:query ">
+          <li ng-repeat="session in event.sessions | orderBy:sortorder | filter:query " id="session{{session.id}}">
             <div class="span0 well votingWidget">
               <div class="votingButton" ng-click="upVoteSession(session)">
                 <i class="icon-chevron-up"></i>

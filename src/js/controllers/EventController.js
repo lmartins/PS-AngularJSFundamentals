@@ -3,11 +3,20 @@
 var eventsApp = angular.module('eventsApp');
 
 eventsApp.controller('EventController',
-  function EventController( $scope, eventData ) {
+  function EventController( $scope, eventData, $anchorScroll ) {
 
     $scope.sortorder = '-upVoteCount';
 
-    $scope.event = eventData.event;
+    eventData.getEvent()
+      .$promise.then(
+        function (event) {
+          $scope.event = event;
+          console.log(event);
+        },
+        function (response) {
+          console.log(response);
+        }
+      )
 
     $scope.upVoteSession = function (session) {
       session.upVoteCount++;
@@ -17,15 +26,9 @@ eventsApp.controller('EventController',
       session.upVoteCount--;
     };
 
-
+    $scope.scrollToSession = function () {
+      $anchorScroll();
+    };
 
   }
 );
-
-
-
-// var HelloController = function ($scope) {
-//   $scope.message = 'Hello World!';
-// };
-//
-// app.controller('HelloController', ['$scope', HelloController]);

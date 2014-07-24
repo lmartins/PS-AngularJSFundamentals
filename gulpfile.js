@@ -37,7 +37,7 @@ gulp.task('browser-sync', function() {
       baseDir: "./"
     },
     // proxy: "192.168.1.3:8000",
-    browser: "google chrome",
+    browser: "google chrome canary",
     online: true
   });
 });
