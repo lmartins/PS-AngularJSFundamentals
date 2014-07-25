@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="eventsApp">
+<head>
+  <meta charset="UTF-8">
+  <title>CookieStore Sample</title>
+  <link rel="stylesheet" href="css/main.css" >
+  <link rel="stylesheet" href="css/bootstrap.min.css" >
+</head>
+<body>
+
+  <div class="container" ng-controller="CookieStoreSampleController">
+
+    <button class="btn" ng-click="saveEventToCookie(event)">Store Cookie</button>
+    <button class="btn" ng-click="getEventFromCookie()">Get Cookie</button>
+    <button class="btn" ng-click="removeEventCookie()">Remove Cookie</button>
+
+  </div>
+
+  <script src="//cdn.jsdelivr.net/angularjs/1.2.20/angular.min.js"></script>
+  <script src="//cdn.jsdelivr.net/angularjs/1.2.20/angular-resource.min.js"></script>
+  <script src="//cdn.jsdelivr.net/angularjs/1.2.20/angular-route.min.js"></script>
+  <script src="//cdn.jsdelivr.net/angularjs/1.2.20/angular-sanitize.min.js"></script>
+  <script src="js/main.bundle.js"></script>
+</body>
+</html>

@@ -101,7 +101,8 @@ var webpackConfig = {
     modulesDirectories: ['node_modules', 'bower_components'],
     alias: {
       'firebase'     : 'firebase/firebase.js',
-      'angular-fire' : 'angularfire/angularfire.js'
+      'angular-fire' : 'angularfire/angularfire.js',
+      'locale'       : 'ngLocale/angular-locale_pt-pt.js'
     }
   },
   externals: {

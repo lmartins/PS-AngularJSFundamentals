@@ -11,7 +11,7 @@ eventsApp.filter('durations', function () {
       return '1 Hour'
     case 3:
       return 'Half Day'
-    case 2:
+    case 4:
       return 'Full Day'
     }
   }

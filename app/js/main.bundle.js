@@ -1,6 +1,6 @@
 /*!
  * AngularJSFundamentals
- * 0.1.0:1406296181702 [development build]
+ * 0.1.0:1406311935526 [development build]
  */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -51,22 +51,29 @@
 	'use strict';
 	
 	// var angular = require('angular');
-	// require('angular-route');
+	__webpack_require__(1);
 	
-	var eventsApp = angular.module('eventsApp', ['ngSanitize', 'ngResource'])
+	var eventsApp = angular.module('eventsApp', ['ngSanitize', 'ngResource', 'ngCookies'])
 	  .factory('myCache', function ($cacheFactory) {
 	    return $cacheFactory('myCache', {capacity: 3})
 	  });
 	
-	__webpack_require__(1);
 	__webpack_require__(2);
 	__webpack_require__(3);
 	__webpack_require__(4);
 	__webpack_require__(5);
 	__webpack_require__(6);
-	
 	__webpack_require__(7);
-	__webpack_require__(8);
+	__webpack_require__(9);
+	__webpack_require__(10);
+	__webpack_require__(11);
+	__webpack_require__(12);
+	
+	__webpack_require__(13);
+	__webpack_require__(14);
+	// require('./services/ExceptionHandler');
+	
+	
 	
 	
 	// var HelloController = function ($scope) {
@@ -78,6 +85,218 @@
 
 /***/ },
 /* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * @license AngularJS v1.2.21
+	 * (c) 2010-2014 Google, Inc. http://angularjs.org
+	 * License: MIT
+	 */
+	(function(window, angular, undefined) {'use strict';
+	
+	/**
+	 * @ngdoc module
+	 * @name ngCookies
+	 * @description
+	 *
+	 * # ngCookies
+	 *
+	 * The `ngCookies` module provides a convenient wrapper for reading and writing browser cookies.
+	 *
+	 *
+	 * <div doc-module-components="ngCookies"></div>
+	 *
+	 * See {@link ngCookies.$cookies `$cookies`} and
+	 * {@link ngCookies.$cookieStore `$cookieStore`} for usage.
+	 */
+	
+	
+	angular.module('ngCookies', ['ng']).
+	  /**
+	   * @ngdoc service
+	   * @name $cookies
+	   *
+	   * @description
+	   * Provides read/write access to browser's cookies.
+	   *
+	   * Only a simple Object is exposed and by adding or removing properties to/from this object, new
+	   * cookies are created/deleted at the end of current $eval.
+	   * The object's properties can only be strings.
+	   *
+	   * Requires the {@link ngCookies `ngCookies`} module to be installed.
+	   *
+	   * @example
+	   *
+	   * ```js
+	   * angular.module('cookiesExample', ['ngCookies'])
+	   *   .controller('ExampleController', ['$cookies', function($cookies) {
+	   *     // Retrieving a cookie
+	   *     var favoriteCookie = $cookies.myFavorite;
+	   *     // Setting a cookie
+	   *     $cookies.myFavorite = 'oatmeal';
+	   *   }]);
+	   * ```
+	   */
+	   factory('$cookies', ['$rootScope', '$browser', function ($rootScope, $browser) {
+	      var cookies = {},
+	          lastCookies = {},
+	          lastBrowserCookies,
+	          runEval = false,
+	          copy = angular.copy,
+	          isUndefined = angular.isUndefined;
+	
+	      //creates a poller fn that copies all cookies from the $browser to service & inits the service
+	      $browser.addPollFn(function() {
+	        var currentCookies = $browser.cookies();
+	        if (lastBrowserCookies != currentCookies) { //relies on browser.cookies() impl
+	          lastBrowserCookies = currentCookies;
+	          copy(currentCookies, lastCookies);
+	          copy(currentCookies, cookies);
+	          if (runEval) $rootScope.$apply();
+	        }
+	      })();
+	
+	      runEval = true;
+	
+	      //at the end of each eval, push cookies
+	      //TODO: this should happen before the "delayed" watches fire, because if some cookies are not
+	      //      strings or browser refuses to store some cookies, we update the model in the push fn.
+	      $rootScope.$watch(push);
+	
+	      return cookies;
+	
+	
+	      /**
+	       * Pushes all the cookies from the service to the browser and verifies if all cookies were
+	       * stored.
+	       */
+	      function push() {
+	        var name,
+	            value,
+	            browserCookies,
+	            updated;
+	
+	        //delete any cookies deleted in $cookies
+	        for (name in lastCookies) {
+	          if (isUndefined(cookies[name])) {
+	            $browser.cookies(name, undefined);
+	          }
+	        }
+	
+	        //update all cookies updated in $cookies
+	        for(name in cookies) {
+	          value = cookies[name];
+	          if (!angular.isString(value)) {
+	            value = '' + value;
+	            cookies[name] = value;
+	          }
+	          if (value !== lastCookies[name]) {
+	            $browser.cookies(name, value);
+	            updated = true;
+	          }
+	        }
+	
+	        //verify what was actually stored
+	        if (updated){
+	          updated = false;
+	          browserCookies = $browser.cookies();
+	
+	          for (name in cookies) {
+	            if (cookies[name] !== browserCookies[name]) {
+	              //delete or reset all cookies that the browser dropped from $cookies
+	              if (isUndefined(browserCookies[name])) {
+	                delete cookies[name];
+	              } else {
+	                cookies[name] = browserCookies[name];
+	              }
+	              updated = true;
+	            }
+	          }
+	        }
+	      }
+	    }]).
+	
+	
+	  /**
+	   * @ngdoc service
+	   * @name $cookieStore
+	   * @requires $cookies
+	   *
+	   * @description
+	   * Provides a key-value (string-object) storage, that is backed by session cookies.
+	   * Objects put or retrieved from this storage are automatically serialized or
+	   * deserialized by angular's toJson/fromJson.
+	   *
+	   * Requires the {@link ngCookies `ngCookies`} module to be installed.
+	   *
+	   * @example
+	   *
+	   * ```js
+	   * angular.module('cookieStoreExample', ['ngCookies'])
+	   *   .controller('ExampleController', ['$cookieStore', function($cookieStore) {
+	   *     // Put cookie
+	   *     $cookieStore.put('myFavorite','oatmeal');
+	   *     // Get cookie
+	   *     var favoriteCookie = $cookieStore.get('myFavorite');
+	   *     // Removing a cookie
+	   *     $cookieStore.remove('myFavorite');
+	   *   }]);
+	   * ```
+	   */
+	   factory('$cookieStore', ['$cookies', function($cookies) {
+	
+	      return {
+	        /**
+	         * @ngdoc method
+	         * @name $cookieStore#get
+	         *
+	         * @description
+	         * Returns the value of given cookie key
+	         *
+	         * @param {string} key Id to use for lookup.
+	         * @returns {Object} Deserialized cookie value.
+	         */
+	        get: function(key) {
+	          var value = $cookies[key];
+	          return value ? angular.fromJson(value) : value;
+	        },
+	
+	        /**
+	         * @ngdoc method
+	         * @name $cookieStore#put
+	         *
+	         * @description
+	         * Sets a value for given cookie key
+	         *
+	         * @param {string} key Id for the `value`.
+	         * @param {Object} value Value to be stored.
+	         */
+	        put: function(key, value) {
+	          $cookies[key] = angular.toJson(value);
+	        },
+	
+	        /**
+	         * @ngdoc method
+	         * @name $cookieStore#remove
+	         *
+	         * @description
+	         * Remove given cookie
+	         *
+	         * @param {string} key Id of the key-value pair to delete.
+	         */
+	        remove: function(key) {
+	          delete $cookies[key];
+	        }
+	      };
+	
+	    }]);
+	
+	
+	})(window, window.angular);
+
+
+/***/ },
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -117,7 +336,7 @@
 
 
 /***/ },
-/* 2 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -144,7 +363,7 @@
 
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -165,7 +384,7 @@
 
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -189,7 +408,7 @@
 
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -224,7 +443,202 @@
 
 
 /***/ },
-/* 6 */
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var eventsApp = angular.module('eventsApp');
+	
+	__webpack_require__(8);
+	
+	eventsApp.controller('LocaleSampleController',
+	  function LocaleSampleController ($scope, $locale) {
+	
+	    $scope.myDate = Date.now();
+	    $scope.myFormat = $locale.DATETIME_FORMATS.fullDate;
+	
+	  }
+	);
+
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	angular.module("ngLocale", [], ["$provide", function($provide) {
+	var PLURAL_CATEGORY = {ZERO: "zero", ONE: "one", TWO: "two", FEW: "few", MANY: "many", OTHER: "other"};
+	$provide.value("$locale", {
+	  "DATETIME_FORMATS": {
+	    "AMPMS": [
+	      "a.m.",
+	      "p.m."
+	    ],
+	    "DAY": [
+	      "Domingo",
+	      "Segunda-feira",
+	      "Ter\u00e7a-feira",
+	      "Quarta-feira",
+	      "Quinta-feira",
+	      "Sexta-feira",
+	      "S\u00e1bado"
+	    ],
+	    "MONTH": [
+	      "Janeiro",
+	      "Fevereiro",
+	      "Mar\u00e7o",
+	      "Abril",
+	      "Maio",
+	      "Junho",
+	      "Julho",
+	      "Agosto",
+	      "Setembro",
+	      "Outubro",
+	      "Novembro",
+	      "Dezembro"
+	    ],
+	    "SHORTDAY": [
+	      "dom",
+	      "seg",
+	      "ter",
+	      "qua",
+	      "qui",
+	      "sex",
+	      "s\u00e1b"
+	    ],
+	    "SHORTMONTH": [
+	      "Jan",
+	      "Fev",
+	      "Mar",
+	      "Abr",
+	      "Mai",
+	      "Jun",
+	      "Jul",
+	      "Ago",
+	      "Set",
+	      "Out",
+	      "Nov",
+	      "Dez"
+	    ],
+	    "fullDate": "EEEE, d 'de' MMMM 'de' y",
+	    "longDate": "d 'de' MMMM 'de' y",
+	    "medium": "dd/MM/yyyy HH:mm:ss",
+	    "mediumDate": "dd/MM/yyyy",
+	    "mediumTime": "HH:mm:ss",
+	    "short": "dd/MM/yy HH:mm",
+	    "shortDate": "dd/MM/yy",
+	    "shortTime": "HH:mm"
+	  },
+	  "NUMBER_FORMATS": {
+	    "CURRENCY_SYM": "\u20ac",
+	    "DECIMAL_SEP": ",",
+	    "GROUP_SEP": "\u00a0",
+	    "PATTERNS": [
+	      {
+	        "gSize": 3,
+	        "lgSize": 3,
+	        "macFrac": 0,
+	        "maxFrac": 3,
+	        "minFrac": 0,
+	        "minInt": 1,
+	        "negPre": "-",
+	        "negSuf": "",
+	        "posPre": "",
+	        "posSuf": ""
+	      },
+	      {
+	        "gSize": 3,
+	        "lgSize": 3,
+	        "macFrac": 0,
+	        "maxFrac": 2,
+	        "minFrac": 2,
+	        "minInt": 1,
+	        "negPre": "-",
+	        "negSuf": "\u00a0\u00a4",
+	        "posPre": "",
+	        "posSuf": "\u00a0\u00a4"
+	      }
+	    ]
+	  },
+	  "id": "pt-pt",
+	  "pluralCat": function (n) {  if (n == 1) {   return PLURAL_CATEGORY.ONE;  }  return PLURAL_CATEGORY.OTHER;}
+	});
+	}]);
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var eventsApp = angular.module('eventsApp');
+	
+	eventsApp.controller('TimeoutSampleController',
+	  function TimeoutSampleController ($scope, $timeout) {
+	
+	    var promise = $timeout(function () {
+	      $scope.name = "John Doe";
+	    }, 3000);
+	
+	    $scope.cancel= function () {
+	      console.log("Promise canceled");
+	      $timeout.cancel(promise);
+	    };
+	
+	  }
+	);
+
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var eventsApp = angular.module('eventsApp');
+	
+	eventsApp.controller('FilterSampleController',
+	  function FilterSampleController ($scope, durationsFilter) {
+	
+	    $scope.data = {};
+	
+	    $scope.data.duration1 = durationsFilter(1);
+	    $scope.data.duration2 = durationsFilter(2);
+	    $scope.data.duration3 = durationsFilter(3);
+	    $scope.data.duration4 = durationsFilter(4);
+	
+	  }
+	);
+
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var eventsApp = angular.module('eventsApp');
+	
+	eventsApp.controller('CookieStoreSampleController',
+	  function CookieStoreSampleController ($scope, $cookieStore) {
+	
+	    $scope.event = {id: 1, name: "My Event"};
+	
+	    $scope.saveEventToCookie = function (event) {
+	      $cookieStore.put('event', event);
+	    };
+	
+	    $scope.getEventFromCookie = function () {
+	      console.log($cookieStore.get('event'));
+	    };
+	
+	    $scope.removeEventCookie = function () {
+	      $cookieStore.remove('event');
+	    };
+	
+	  }
+	);
+
+
+/***/ },
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -240,7 +654,7 @@
 	      return '1 Hour'
 	    case 3:
 	      return 'Half Day'
-	    case 2:
+	    case 4:
 	      return 'Full Day'
 	    }
 	  }
@@ -248,7 +662,7 @@
 
 
 /***/ },
-/* 7 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -272,7 +686,7 @@
 
 
 /***/ },
-/* 8 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

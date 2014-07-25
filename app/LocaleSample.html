@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="eventsApp">
+<head>
+  <meta charset="UTF-8">
+  <title>Locale Sample</title>
+  <link rel="stylesheet" href="css/main.css" >
+  <link rel="stylesheet" href="css/bootstrap.min.css" >
+</head>
+<body>
+
+  <div class="container" ng-controller="LocaleSampleController">
+    <h3>{{ myDate | date:myFormat }}</h3>
+  </div>
+
+  <script src="//cdn.jsdelivr.net/angularjs/1.2.20/angular.min.js"></script>
+  <script src="//cdn.jsdelivr.net/angularjs/1.2.20/angular-resource.min.js"></script>
+  <script src="//cdn.jsdelivr.net/angularjs/1.2.20/angular-route.min.js"></script>
+  <script src="//cdn.jsdelivr.net/angularjs/1.2.20/angular-sanitize.min.js"></script>
+  <script src="js/main.bundle.js"></script>
+</body>
+</html>
