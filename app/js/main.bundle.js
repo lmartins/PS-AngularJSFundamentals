@@ -1,6 +1,6 @@
 /*!
  * AngularJSFundamentals
- * 0.1.0:1406372223799 [development build]
+ * 0.1.0:1406382101197 [development build]
  */
 webpackJsonp([1],[
 /* 0 */
@@ -53,6 +53,12 @@ webpackJsonp([1],[
 	        }
 	      }
 	    );
+	    $routeProvider.when('/sampleDirective',
+	      {
+	        templateUrl: '/templates/SampleDirective.html',
+	        controller: 'SampleDirectiveController'
+	      }
+	    );
 	    $routeProvider.otherwise({redirectTo: '/events'});
 	    // $locationProvider.html5Mode(true);
 	  })
@@ -60,6 +66,7 @@ webpackJsonp([1],[
 	    return $cacheFactory('myCache', {capacity: 3})
 	  });
 	
+	// CONTROLLERS ----------------------------------------------------------------
 	__webpack_require__(2);
 	__webpack_require__(3);
 	__webpack_require__(4);
@@ -71,11 +78,22 @@ webpackJsonp([1],[
 	__webpack_require__(11);
 	__webpack_require__(12);
 	__webpack_require__(13);
-	__webpack_require__(14);
 	
+	
+	// DIRECTIVES -----------------------------------------------------------------
+	__webpack_require__(14);
 	__webpack_require__(15);
 	__webpack_require__(16);
-	// require('./services/ExceptionHandler');
+	__webpack_require__(17);
+	
+	
+	// FILTERS --------------------------------------------------------------------
+	__webpack_require__(18);
+	
+	
+	// SERVICES -------------------------------------------------------------------
+	__webpack_require__(19);
+	__webpack_require__(20);
 	
 	
 	
@@ -331,6 +349,7 @@ webpackJsonp([1],[
 	    //   )
 	
 	    $scope.upVoteSession = function (session) {
+	      console.log("tetse");
 	      session.upVoteCount++;
 	    };
 	
@@ -500,14 +519,14 @@ webpackJsonp([1],[
 	
 	eventsApp.controller('MainMenuController',
 	  function MainMenuController( $scope, $location ) {
-	    console.log("absUrl" + $location.absUrl());
-	    console.log("Protocol: " + $location.protocol());
-	    console.log("Port: " + $location.port());
-	    console.log("Host: " + $location.host());
-	    console.log("Path: " + $location.path());
-	    console.log("Search: " + $location.search());
-	    console.log("Hash: " + $location.hash());
-	    console.log("URL: " + $location.url());
+	    // console.log("absUrl" + $location.absUrl());
+	    // console.log("Protocol: " + $location.protocol());
+	    // console.log("Port: " + $location.port());
+	    // console.log("Host: " + $location.host());
+	    // console.log("Path: " + $location.path());
+	    // console.log("Search: " + $location.search());
+	    // console.log("Hash: " + $location.hash());
+	    // console.log("URL: " + $location.url());
 	
 	    $scope.createEvent = function () {
 	      $location.replace();
@@ -598,6 +617,83 @@ webpackJsonp([1],[
 	
 	var eventsApp = angular.module('eventsApp');
 	
+	eventsApp.directive('mySample', function ( $compile ) {
+	  return {
+	    restrict: 'C',
+	    template: "<input type='text' ng-model='sampleData' /> {{sampleData}}<br/>",
+	    scope: {
+	      
+	    }
+	  }
+	});
+
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var eventsApp = angular.module('eventsApp');
+	
+	eventsApp.controller('SampleDirectiveController',
+	  function SampleDirectiveController ($scope) {
+	
+	    console.log("Directive Controller");
+	
+	  }
+	);
+
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var eventsApp = angular.module('eventsApp');
+	
+	eventsApp.directive('eventThumbnail', function () {
+	  return {
+	    restrict: 'E',
+	    replace: true,
+	    templateUrl: "/templates/directives/eventThumbnail.html",
+	    scope: {
+	      event: '=event'
+	    }
+	  }
+	});
+
+
+/***/ },
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var eventsApp = angular.module('eventsApp');
+	
+	eventsApp.directive('upvote', function () {
+	  return {
+	    restrict: 'A',
+	    // replace: true,
+	    templateUrl: '/templates/directives/upvote.html',
+	    scope: {
+	      upvote: "&",
+	      downvote: "&",
+	      count: "="
+	    }
+	  }
+	});
+
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var eventsApp = angular.module('eventsApp');
+	
 	eventsApp.filter('durations', function () {
 	  return function (duration) {
 	    switch (duration) {
@@ -615,7 +711,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 15 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -643,7 +739,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 16 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

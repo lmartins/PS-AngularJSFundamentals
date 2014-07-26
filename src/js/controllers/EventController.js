@@ -26,6 +26,7 @@ eventsApp.controller('EventController',
     //   )
 
     $scope.upVoteSession = function (session) {
+      console.log("tetse");
       session.upVoteCount++;
     };
 

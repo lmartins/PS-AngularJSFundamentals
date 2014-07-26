@@ -45,6 +45,12 @@ var eventsApp = angular.module('eventsApp', ['ngSanitize', 'ngResource', 'ngCook
         }
       }
     );
+    $routeProvider.when('/sampleDirective',
+      {
+        templateUrl: '/templates/SampleDirective.html',
+        controller: 'SampleDirectiveController'
+      }
+    );
     $routeProvider.otherwise({redirectTo: '/events'});
     // $locationProvider.html5Mode(true);
   })
@@ -52,6 +58,7 @@ var eventsApp = angular.module('eventsApp', ['ngSanitize', 'ngResource', 'ngCook
     return $cacheFactory('myCache', {capacity: 3})
   });
 
+// CONTROLLERS ----------------------------------------------------------------
 require('./controllers/EventController');
 require('./controllers/EditEventController');
 require('./controllers/EditProfileController');
@@ -63,11 +70,22 @@ require('./controllers/MainMenuController.js');
 require('./controllers/TimeoutSampleController');
 require('./controllers/FilterSampleController');
 require('./controllers/CookieStoreSampleController');
+
+
+// DIRECTIVES -----------------------------------------------------------------
+require('./directives/mySample');
+require('./controllers/SampleDirectiveController');
+require('./directives/eventThumbnail');
+require('./directives/upvote');
+
+
+// FILTERS --------------------------------------------------------------------
 require('./filters');
 
+
+// SERVICES -------------------------------------------------------------------
 require('./services/EventData');
 require('./services/GravatarUrlBuilder');
-// require('./services/ExceptionHandler');
 
 
 
