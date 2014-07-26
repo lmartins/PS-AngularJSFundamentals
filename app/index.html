@@ -7,31 +7,26 @@
   <link rel="stylesheet" href="css/bootstrap.min.css" >
 </head>
 
-<body ng-controller="EventController">
+<body>
 
   <div class="container">
+
     <div class="navbar">
       <div class="navbar-inner">
-        <ul class="nav">
-          <li>a</li>
+        <ul class="nav" ng-controller="MainMenuController">
+          <li><a href="#/about">About</a></li>
+          <li><a href="#/events">List</a></li>
+          <li><a href="#/newEvent" ng-click="createEvent()">New Event</a></li>
+          <li><a href="#/editProfile">Edit Profile</a></li>
         </ul>
       </div>
     </div>
 
-    <div class="row">
-      <h2>{{ event.name }}</h2>
-      <p>{{ event.date }}</p>
-      <p>{{ event.time }}</p>
-      <address>
-        {{event.location.address}} - {{event.location.city }} - {{event.location.province}}
-      </address>
-    </div>
+    <ng-view></ng-view>
 
   </div>
 
-  <script src="//cdn.jsdelivr.net/angularjs/1.2.20/angular.min.js"></script>
-  <script src="//cdn.jsdelivr.net/angularjs/1.2.20/angular-resource.min.js"></script>
-  <script src="//cdn.jsdelivr.net/angularjs/1.2.20/angular-route.min.js"></script>
+  <script src="js/vendor.bundle.js"></script>
   <script src="js/main.bundle.js"></script>
 
 </body>

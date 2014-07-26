@@ -1,50 +1,8 @@
 /*!
  * AngularJSFundamentals
- * 0.1.0:1406311935526 [development build]
+ * 0.1.0:1406372223799 [development build]
  */
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
-/******/ 			return installedModules[moduleId].exports;
-/******/
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			exports: {},
-/******/ 			id: moduleId,
-/******/ 			loaded: false
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.loaded = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/app/js/";
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(0);
-/******/ })
-/************************************************************************/
-/******/ ([
+webpackJsonp([1],[
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -53,7 +11,51 @@
 	// var angular = require('angular');
 	__webpack_require__(1);
 	
-	var eventsApp = angular.module('eventsApp', ['ngSanitize', 'ngResource', 'ngCookies'])
+	var eventsApp = angular.module('eventsApp', ['ngSanitize', 'ngResource', 'ngCookies', 'ngRoute'])
+	  .config(function ($routeProvider) {
+	
+	    $routeProvider.when('/about',
+	      {
+	        template: 'Hello World'
+	      }
+	    );
+	    $routeProvider.when('/newEvent',
+	      {
+	        templateUrl: '/templates/NewEvent.html',
+	        controller: 'EditEventController'
+	      }
+	    );
+	    $routeProvider.when('/events',
+	      {
+	        templateUrl: 'templates/EventList.html',
+	        controller: 'EventListController',
+	        resolve: {
+	          events: function ($route, eventData) {
+	            return eventData.getAllEvents().$promise;
+	          }
+	        }
+	      }
+	    );
+	    $routeProvider.when('/editProfile',
+	      {
+	        templateUrl: 'templates/EditProfile.html',
+	        controller: 'EditProfileController'
+	      }
+	    );
+	    $routeProvider.when('/event/:eventId',
+	      {
+	        templateUrl: '/templates/EventDetails.html',
+	        controller: 'EventController',
+	        resolve: {
+	          event: function ($route, eventData) {
+	            return eventData.getEvent($route.current.pathParams.eventId).$promise;
+	          }
+	        }
+	      }
+	    );
+	    $routeProvider.otherwise({redirectTo: '/events'});
+	    // $locationProvider.html5Mode(true);
+	  })
 	  .factory('myCache', function ($cacheFactory) {
 	    return $cacheFactory('myCache', {capacity: 3})
 	  });
@@ -64,13 +66,15 @@
 	__webpack_require__(5);
 	__webpack_require__(6);
 	__webpack_require__(7);
-	__webpack_require__(9);
+	__webpack_require__(8);
 	__webpack_require__(10);
 	__webpack_require__(11);
 	__webpack_require__(12);
-	
 	__webpack_require__(13);
 	__webpack_require__(14);
+	
+	__webpack_require__(15);
+	__webpack_require__(16);
 	// require('./services/ExceptionHandler');
 	
 	
@@ -304,20 +308,27 @@
 	var eventsApp = angular.module('eventsApp');
 	
 	eventsApp.controller('EventController',
-	  function EventController( $scope, eventData, $anchorScroll ) {
+	  function EventController( $scope, eventData, $routeParams, $route ) {
 	
 	    $scope.sortorder = '-upVoteCount';
+	    // $scope.event = eventData.getEvent( $routeParams.eventId );
+	    $scope.event = $route.current.locals.event;
+	    console.log($route.current.params.eventId);
 	
-	    eventData.getEvent()
-	      .$promise.then(
-	        function (event) {
-	          $scope.event = event;
-	          console.log(event);
-	        },
-	        function (response) {
-	          console.log(response);
-	        }
-	      )
+	    // $scope.$on('$routeChangeSuccess', function (ev, current, prev) {
+	    //   //  console.log($route.current.foo);
+	    // });
+	
+	    // eventData.getEvent( $routeParams.eventId )
+	    //   .$promise.then(
+	    //     function (event) {
+	    //       $scope.event = event;
+	    //       // console.log(event);
+	    //     },
+	    //     function (response) {
+	    //       console.log(response);
+	    //     }
+	    //   )
 	
 	    $scope.upVoteSession = function (session) {
 	      session.upVoteCount++;
@@ -327,8 +338,8 @@
 	      session.upVoteCount--;
 	    };
 	
-	    $scope.scrollToSession = function () {
-	      $anchorScroll();
+	    $scope.reload = function () {
+	      $route.reload();
 	    };
 	
 	  }
@@ -390,6 +401,23 @@
 	'use strict';
 	var eventsApp = angular.module('eventsApp');
 	
+	eventsApp.controller('EventListController',
+	  function EventListController ($scope, $location, $route) {
+	
+	    $scope.events = $route.current.locals.events;
+	    // $scope.events = eventData.getAllEvents();
+	
+	  }
+	);
+
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var eventsApp = angular.module('eventsApp');
+	
 	eventsApp.controller('CacheSampleController',
 	  function CacheSampleController ($scope, myCache) {
 	    $scope.addToCache = function (key, value) {
@@ -408,7 +436,7 @@
 
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -443,13 +471,13 @@
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var eventsApp = angular.module('eventsApp');
 	
-	__webpack_require__(8);
+	__webpack_require__(9);
 	
 	eventsApp.controller('LocaleSampleController',
 	  function LocaleSampleController ($scope, $locale) {
@@ -462,111 +490,36 @@
 
 
 /***/ },
-/* 8 */
+/* 9 */,
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	angular.module("ngLocale", [], ["$provide", function($provide) {
-	var PLURAL_CATEGORY = {ZERO: "zero", ONE: "one", TWO: "two", FEW: "few", MANY: "many", OTHER: "other"};
-	$provide.value("$locale", {
-	  "DATETIME_FORMATS": {
-	    "AMPMS": [
-	      "a.m.",
-	      "p.m."
-	    ],
-	    "DAY": [
-	      "Domingo",
-	      "Segunda-feira",
-	      "Ter\u00e7a-feira",
-	      "Quarta-feira",
-	      "Quinta-feira",
-	      "Sexta-feira",
-	      "S\u00e1bado"
-	    ],
-	    "MONTH": [
-	      "Janeiro",
-	      "Fevereiro",
-	      "Mar\u00e7o",
-	      "Abril",
-	      "Maio",
-	      "Junho",
-	      "Julho",
-	      "Agosto",
-	      "Setembro",
-	      "Outubro",
-	      "Novembro",
-	      "Dezembro"
-	    ],
-	    "SHORTDAY": [
-	      "dom",
-	      "seg",
-	      "ter",
-	      "qua",
-	      "qui",
-	      "sex",
-	      "s\u00e1b"
-	    ],
-	    "SHORTMONTH": [
-	      "Jan",
-	      "Fev",
-	      "Mar",
-	      "Abr",
-	      "Mai",
-	      "Jun",
-	      "Jul",
-	      "Ago",
-	      "Set",
-	      "Out",
-	      "Nov",
-	      "Dez"
-	    ],
-	    "fullDate": "EEEE, d 'de' MMMM 'de' y",
-	    "longDate": "d 'de' MMMM 'de' y",
-	    "medium": "dd/MM/yyyy HH:mm:ss",
-	    "mediumDate": "dd/MM/yyyy",
-	    "mediumTime": "HH:mm:ss",
-	    "short": "dd/MM/yy HH:mm",
-	    "shortDate": "dd/MM/yy",
-	    "shortTime": "HH:mm"
-	  },
-	  "NUMBER_FORMATS": {
-	    "CURRENCY_SYM": "\u20ac",
-	    "DECIMAL_SEP": ",",
-	    "GROUP_SEP": "\u00a0",
-	    "PATTERNS": [
-	      {
-	        "gSize": 3,
-	        "lgSize": 3,
-	        "macFrac": 0,
-	        "maxFrac": 3,
-	        "minFrac": 0,
-	        "minInt": 1,
-	        "negPre": "-",
-	        "negSuf": "",
-	        "posPre": "",
-	        "posSuf": ""
-	      },
-	      {
-	        "gSize": 3,
-	        "lgSize": 3,
-	        "macFrac": 0,
-	        "maxFrac": 2,
-	        "minFrac": 2,
-	        "minInt": 1,
-	        "negPre": "-",
-	        "negSuf": "\u00a0\u00a4",
-	        "posPre": "",
-	        "posSuf": "\u00a0\u00a4"
-	      }
-	    ]
-	  },
-	  "id": "pt-pt",
-	  "pluralCat": function (n) {  if (n == 1) {   return PLURAL_CATEGORY.ONE;  }  return PLURAL_CATEGORY.OTHER;}
-	});
-	}]);
+	
+	var eventsApp = angular.module('eventsApp');
+	
+	eventsApp.controller('MainMenuController',
+	  function MainMenuController( $scope, $location ) {
+	    console.log("absUrl" + $location.absUrl());
+	    console.log("Protocol: " + $location.protocol());
+	    console.log("Port: " + $location.port());
+	    console.log("Host: " + $location.host());
+	    console.log("Path: " + $location.path());
+	    console.log("Search: " + $location.search());
+	    console.log("Hash: " + $location.hash());
+	    console.log("URL: " + $location.url());
+	
+	    $scope.createEvent = function () {
+	      $location.replace();
+	      // $location.url('/#/newEvent')
+	    }
+	
+	  }
+	);
+
 
 /***/ },
-/* 9 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -589,7 +542,7 @@
 
 
 /***/ },
-/* 10 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -610,7 +563,7 @@
 
 
 /***/ },
-/* 11 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -638,7 +591,7 @@
 
 
 /***/ },
-/* 12 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -662,7 +615,7 @@
 
 
 /***/ },
-/* 13 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -670,23 +623,27 @@
 	
 	eventsApp.factory('eventData', function( $resource ) {
 	
-	  var resource = $resource('/app/data/event/:id.json', {id:'@id'});
+	  var resource = $resource('data/event/:id.json', {id: '@id'}, {"getAll": {method: "GET", isArray:true, params: {something: "foo"}}});
+	  // var resource = $resource('/app/data/event/:id.json', {id:'@id'});
 	
 	  return {
-	    getEvent: function () {
-	      return resource.get({id:1});
+	    getEvent: function (eventId) {
+	      return resource.get({id:eventId});
 	    },
 	    save: function (event) {
 	      event.id = 999;
 	      return resource.save(event);
 	    },
+	    getAllEvents: function () {
+	      return resource.query();
+	    }
 	
 	  };
 	});
 
 
 /***/ },
-/* 14 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -713,5 +670,5 @@
 
 
 /***/ }
-/******/ ])
+]);
 //# sourceMappingURL=main.bundle.js.map

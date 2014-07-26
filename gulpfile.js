@@ -34,7 +34,7 @@ var config = {
 gulp.task('browser-sync', function() {
   browserSync({
     server: {
-      baseDir: "./"
+      baseDir: "./app/"
     },
     // proxy: "192.168.1.3:8000",
     browser: "google chrome canary",
@@ -84,6 +84,7 @@ var webpackConfig = {
   devtool: 'source-map',
   entry: {
     main: './src/js/app.js',
+    vendor: ['angular', 'angular-resource', 'angular-route', 'angular-sanitize',  'locale']
   },
   output: {
     path: config.JS.build ,
@@ -108,7 +109,7 @@ var webpackConfig = {
   externals: {
     // require("jquery") is external and available
     //  on the global var jQuery
-    "angular": "angular",
+    // "angular": "angular",
     "jquery": "jQuery"
   }
 
@@ -116,6 +117,7 @@ var webpackConfig = {
 
 gulp.task('set-env-dev', function() {
   webpackConfig.plugins = [
+    new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor", /* filename= */"vendor.bundle.js"),
     new webpack.BannerPlugin(info.name + '\n' + info.version + ':' + Date.now() + ' [development build]'),
     new ComponentPlugin(),
     new webpack.ResolverPlugin(
@@ -129,6 +131,7 @@ gulp.task('set-env-prod', function() {
   webpackConfig.debug = false;
   webpackConfig.devtool = "";
   webpackConfig.plugins = [
+    new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor", /* filename= */"vendor.bundle.js"),
     new webpack.optimize.UglifyJsPlugin({
       mangle: false
     }),
