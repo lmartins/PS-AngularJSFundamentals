@@ -1,6 +1,6 @@
 /*!
  * AngularJSFundamentals
- * 0.1.0:1406382101197 [development build]
+ * 0.1.0:1406405083502 [development build]
  */
 webpackJsonp([1],[
 /* 0 */
@@ -85,15 +85,16 @@ webpackJsonp([1],[
 	__webpack_require__(15);
 	__webpack_require__(16);
 	__webpack_require__(17);
-	
-	
-	// FILTERS --------------------------------------------------------------------
 	__webpack_require__(18);
 	
 	
-	// SERVICES -------------------------------------------------------------------
+	// FILTERS --------------------------------------------------------------------
 	__webpack_require__(19);
+	
+	
+	// SERVICES -------------------------------------------------------------------
 	__webpack_require__(20);
+	__webpack_require__(21);
 	
 	
 	
@@ -333,24 +334,9 @@ webpackJsonp([1],[
 	    $scope.event = $route.current.locals.event;
 	    console.log($route.current.params.eventId);
 	
-	    // $scope.$on('$routeChangeSuccess', function (ev, current, prev) {
-	    //   //  console.log($route.current.foo);
-	    // });
-	
-	    // eventData.getEvent( $routeParams.eventId )
-	    //   .$promise.then(
-	    //     function (event) {
-	    //       $scope.event = event;
-	    //       // console.log(event);
-	    //     },
-	    //     function (response) {
-	    //       console.log(response);
-	    //     }
-	    //   )
-	
 	    $scope.upVoteSession = function (session) {
-	      console.log("tetse");
 	      session.upVoteCount++;
+	      console.log("tetse");
 	    };
 	
 	    $scope.downVoteSession = function (session) {
@@ -674,8 +660,7 @@ webpackJsonp([1],[
 	
 	eventsApp.directive('upvote', function () {
 	  return {
-	    restrict: 'A',
-	    // replace: true,
+	    restrict: 'E',
 	    templateUrl: '/templates/directives/upvote.html',
 	    scope: {
 	      upvote: "&",
@@ -688,6 +673,55 @@ webpackJsonp([1],[
 
 /***/ },
 /* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var eventsApp = angular.module('eventsApp');
+	
+	eventsApp.directive('dateKeys', function () {
+	
+	  return {
+	    restrict: 'A',
+	    link: function (scope, element, attrs, controller) {
+	      element.on('keydown', function (event) {
+	        if (isNumericKeyCode(event.keyCode) || isForwardSlashKeyCode(event.keyCode) || isNavigationKeycode(event.keyCode)) {
+	          return true;
+	        }
+	        return false;
+	      });
+	    }
+	  }
+	
+	  function isNumericKeyCode(keyCode) {
+	    return (event.keyCode >= 48 && event.keyCode <= 57)
+	        || (event.keyCode >= 96 && event.keyCode <= 105);
+	  }
+	  function isForwardSlashKeyCode(keyCode) {
+	    return event.keyCode === 191;
+	  }
+	  function isNavigationKeycode(keyCode) {
+	    switch (keyCode) {
+	      case 8: //backspace
+	      case 35: //end
+	      case 36: //home
+	      case 37: //left
+	      case 38: //up
+	      case 39: //right
+	      case 40: //down
+	      case 45: //ins
+	      case 46: //del
+	        return true;
+	      default:
+	        return false;
+	    }
+	  }
+	
+	});
+
+
+/***/ },
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -711,7 +745,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -739,7 +773,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

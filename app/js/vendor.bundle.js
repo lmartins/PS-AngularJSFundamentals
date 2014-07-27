@@ -1,6 +1,6 @@
 /*!
  * AngularJSFundamentals
- * 0.1.0:1406382101197 [development build]
+ * 0.1.0:1406405083502 [development build]
  */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// install a JSONP callback for chunk loading
@@ -101,10 +101,10 @@
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(21);
 	__webpack_require__(22);
 	__webpack_require__(23);
 	__webpack_require__(24);
+	__webpack_require__(25);
 	module.exports = __webpack_require__(9);
 
 
@@ -215,7 +215,7 @@
 
 /***/ },
 
-/***/ 21:
+/***/ 22:
 /***/ function(module, exports, __webpack_require__) {
 
 	var require;/**
@@ -22104,7 +22104,7 @@
 
 /***/ },
 
-/***/ 22:
+/***/ 23:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -22730,7 +22730,7 @@
 
 /***/ },
 
-/***/ 23:
+/***/ 24:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -23664,7 +23664,7 @@
 
 /***/ },
 
-/***/ 24:
+/***/ 25:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**

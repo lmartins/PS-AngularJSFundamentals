@@ -77,6 +77,7 @@ require('./directives/mySample');
 require('./controllers/SampleDirectiveController');
 require('./directives/eventThumbnail');
 require('./directives/upvote');
+require('./directives/datekeys');
 
 
 // FILTERS --------------------------------------------------------------------

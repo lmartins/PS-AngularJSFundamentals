@@ -10,24 +10,9 @@ eventsApp.controller('EventController',
     $scope.event = $route.current.locals.event;
     console.log($route.current.params.eventId);
 
-    // $scope.$on('$routeChangeSuccess', function (ev, current, prev) {
-    //   //  console.log($route.current.foo);
-    // });
-
-    // eventData.getEvent( $routeParams.eventId )
-    //   .$promise.then(
-    //     function (event) {
-    //       $scope.event = event;
-    //       // console.log(event);
-    //     },
-    //     function (response) {
-    //       console.log(response);
-    //     }
-    //   )
-
     $scope.upVoteSession = function (session) {
-      console.log("tetse");
       session.upVoteCount++;
+      console.log("tetse");
     };
 
     $scope.downVoteSession = function (session) {
