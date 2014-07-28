@@ -1,8 +1,8 @@
 /*!
  * AngularJSFundamentals
- * 0.1.0:1406405083502 [development build]
+ * 0.1.0:1406490690564 [development build]
  */
-webpackJsonp([1],[
+webpackJsonp([0],[
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -390,6 +390,7 @@ webpackJsonp([1],[
 	  function EditProfileController( $scope, gravatarUrlBuilder ) {
 	
 	    $scope.user = {};
+	    console.log("testetestetteste123");
 	
 	    $scope.getGravatarURL = function (email) {
 	      return gravatarUrlBuilder.buildGravatarUrl(email);

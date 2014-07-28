@@ -6,6 +6,7 @@ var gulp            = require('gulp'),
     browserSync     = require('browser-sync'),
     plugins         = gulpLoadPlugins(),
     webpack         = require('webpack'),
+    ngminPlugin     = require("ngmin-webpack-plugin"),
     ComponentPlugin = require("component-webpack-plugin"),
     info            = require('./package.json'),
     webpackCompiler;
@@ -132,6 +133,7 @@ gulp.task('set-env-prod', function() {
   webpackConfig.devtool = "";
   webpackConfig.plugins = [
     new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor", /* filename= */"vendor.bundle.js"),
+    new ngminPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       mangle: false
     }),
