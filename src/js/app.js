@@ -51,7 +51,7 @@ var eventsApp = angular.module('eventsApp', ['ngSanitize', 'ngResource', 'ngCook
         controller: 'SampleDirectiveController'
       }
     );
-    $routeProvider.otherwise({redirectTo: '/events'});
+    // $routeProvider.otherwise({redirectTo: '/events'});
     // $locationProvider.html5Mode(true);
   })
   .factory('myCache', function ($cacheFactory) {
@@ -73,11 +73,13 @@ require('./controllers/CookieStoreSampleController');
 
 
 // DIRECTIVES -----------------------------------------------------------------
-require('./directives/mySample');
 require('./controllers/SampleDirectiveController');
-require('./directives/eventThumbnail');
-require('./directives/upvote');
 require('./directives/datekeys');
+require('./directives/eventThumbnail');
+require('./directives/gravatar');
+require('./directives/greeting');
+require('./directives/mySample');
+require('./directives/upvote');
 
 
 // FILTERS --------------------------------------------------------------------

@@ -11,7 +11,7 @@ eventsApp.directive('dateKeys', function () {
         if (isNumericKeyCode(event.keyCode) || isForwardSlashKeyCode(event.keyCode) || isNavigationKeycode(event.keyCode)) {
           return true;
         }
-        return false;
+        return false
       });
     }
   }
@@ -20,9 +20,11 @@ eventsApp.directive('dateKeys', function () {
     return (event.keyCode >= 48 && event.keyCode <= 57)
         || (event.keyCode >= 96 && event.keyCode <= 105);
   }
+
   function isForwardSlashKeyCode(keyCode) {
     return event.keyCode === 191;
   }
+
   function isNavigationKeycode(keyCode) {
     switch (keyCode) {
       case 8: //backspace

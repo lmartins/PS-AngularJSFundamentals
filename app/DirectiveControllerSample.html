@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="eventsApp">
+
+<head>
+  <title>Directive Controller Sample</title>
+  <link rel="stylesheet" href="css/main.css" >
+  <link rel="stylesheet" href="css/bootstrap.min.css" >
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <ul class="nav" ng-controller="MainMenuController">
+          <li><a href="#/about">About</a></li>
+          <li><a href="#/events">List</a></li>
+          <li><a href="#/newEvent" ng-click="createEvent()">New Event</a></li>
+          <li><a href="#/editProfile">Edit Profile</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <greeting finnish hindi></greeting>
+
+
+  </div>
+
+  <script src="js/vendor.bundle.js"></script>
+  <script src="js/main.bundle.js"></script>
+
+</body>
+</html>

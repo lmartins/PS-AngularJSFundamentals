@@ -1,8 +1,8 @@
 /*!
  * AngularJSFundamentals
- * 0.1.0:1406490690564 [development build]
+ * 0.1.0:1406562103300 [development build]
  */
-webpackJsonp([0],[
+webpackJsonp([1],[
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -59,7 +59,7 @@ webpackJsonp([0],[
 	        controller: 'SampleDirectiveController'
 	      }
 	    );
-	    $routeProvider.otherwise({redirectTo: '/events'});
+	    // $routeProvider.otherwise({redirectTo: '/events'});
 	    // $locationProvider.html5Mode(true);
 	  })
 	  .factory('myCache', function ($cacheFactory) {
@@ -86,15 +86,17 @@ webpackJsonp([0],[
 	__webpack_require__(16);
 	__webpack_require__(17);
 	__webpack_require__(18);
+	__webpack_require__(19);
+	__webpack_require__(20);
 	
 	
 	// FILTERS --------------------------------------------------------------------
-	__webpack_require__(19);
+	__webpack_require__(21);
 	
 	
 	// SERVICES -------------------------------------------------------------------
-	__webpack_require__(20);
-	__webpack_require__(21);
+	__webpack_require__(22);
+	__webpack_require__(23);
 	
 	
 	
@@ -336,7 +338,6 @@ webpackJsonp([0],[
 	
 	    $scope.upVoteSession = function (session) {
 	      session.upVoteCount++;
-	      console.log("tetse");
 	    };
 	
 	    $scope.downVoteSession = function (session) {
@@ -390,7 +391,6 @@ webpackJsonp([0],[
 	  function EditProfileController( $scope, gravatarUrlBuilder ) {
 	
 	    $scope.user = {};
-	    console.log("testetestetteste123");
 	
 	    $scope.getGravatarURL = function (email) {
 	      return gravatarUrlBuilder.buildGravatarUrl(email);
@@ -422,6 +422,7 @@ webpackJsonp([0],[
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
+	
 	var eventsApp = angular.module('eventsApp');
 	
 	eventsApp.controller('CacheSampleController',
@@ -601,25 +602,6 @@ webpackJsonp([0],[
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
-	var eventsApp = angular.module('eventsApp');
-	
-	eventsApp.directive('mySample', function ( $compile ) {
-	  return {
-	    restrict: 'C',
-	    template: "<input type='text' ng-model='sampleData' /> {{sampleData}}<br/>",
-	    scope: {
-	      
-	    }
-	  }
-	});
-
-
-/***/ },
-/* 15 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
 	var eventsApp = angular.module('eventsApp');
 	
 	eventsApp.controller('SampleDirectiveController',
@@ -629,6 +611,57 @@ webpackJsonp([0],[
 	
 	  }
 	);
+
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var eventsApp = angular.module('eventsApp');
+	
+	eventsApp.directive('dateKeys', function () {
+	
+	  return {
+	    restrict: 'A',
+	    link: function (scope, element, attrs, controller) {
+	      element.on('keydown', function (event) {
+	        if (isNumericKeyCode(event.keyCode) || isForwardSlashKeyCode(event.keyCode) || isNavigationKeycode(event.keyCode)) {
+	          return true;
+	        }
+	        return false
+	      });
+	    }
+	  }
+	
+	  function isNumericKeyCode(keyCode) {
+	    return (event.keyCode >= 48 && event.keyCode <= 57)
+	        || (event.keyCode >= 96 && event.keyCode <= 105);
+	  }
+	
+	  function isForwardSlashKeyCode(keyCode) {
+	    return event.keyCode === 191;
+	  }
+	
+	  function isNavigationKeycode(keyCode) {
+	    switch (keyCode) {
+	      case 8: //backspace
+	      case 35: //end
+	      case 36: //home
+	      case 37: //left
+	      case 38: //up
+	      case 39: //right
+	      case 40: //down
+	      case 45: //ins
+	      case 46: //del
+	        return true;
+	      default:
+	        return false;
+	    }
+	  }
+	
+	});
 
 
 /***/ },
@@ -659,6 +692,99 @@ webpackJsonp([0],[
 	
 	var eventsApp = angular.module('eventsApp');
 	
+	eventsApp.directive('gravatar', function (gravatarUrlBuilder) {
+	  return {
+	    restrict: 'E',
+	    template: '<img />',
+	    replace: true,
+	    link: function (scope, element, attrs, controller) {
+	      attrs.$observe('email', function (newValue, oldValue) {
+	        if (newValue !== oldValue){
+	          attrs.$set('src', gravatarUrlBuilder.buildGravatarUrl(newValue));
+	        }
+	      })
+	    }
+	  }
+	});
+
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var eventsApp = angular.module('eventsApp');
+	
+	eventsApp
+	  .directive('greeting', function (gravatarUrlBuilder) {
+	    return {
+	      restrict: 'E',
+	      replace: true,
+	      priority: 1,
+	      template: "<button class='btn' ng-click='sayHello()'>Say Hello</button>",
+	      controller: function ($scope) {
+	        var greetings = ['Hello']
+	        $scope.sayHello = function () {
+	          console.log( greetings.join() );
+	        }
+	        this.addGreeting = function (greeting) {
+	          greetings.push(greeting);
+	        }
+	      }
+	
+	    }
+	  })
+	  .directive('finnish', function () {
+	    return {
+	      restrict: 'A',
+	      priority: 1,
+	      // terminal: true,
+	      require: 'greeting',
+	      link: function (scope, element, attrs, controller) {
+	        controller.addGreeting('hei');
+	      }
+	    }
+	  })
+	  .directive('hindi', function () {
+	    return {
+	      restrict: 'A',
+	      priority: 2,
+	      require: 'greeting',
+	      link: function (scope, element, attrs, controller) {
+	        controller.addGreeting('sdsdsdd');
+	      }
+	    }
+	  });
+
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var eventsApp = angular.module('eventsApp');
+	
+	eventsApp.directive('mySample', function ( $compile ) {
+	  return {
+	    restrict: 'C',
+	    template: "<input type='text' ng-model='sampleData' /> {{sampleData}}<br/>",
+	    scope: {
+	      
+	    }
+	  }
+	});
+
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var eventsApp = angular.module('eventsApp');
+	
 	eventsApp.directive('upvote', function () {
 	  return {
 	    restrict: 'E',
@@ -673,56 +799,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 18 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var eventsApp = angular.module('eventsApp');
-	
-	eventsApp.directive('dateKeys', function () {
-	
-	  return {
-	    restrict: 'A',
-	    link: function (scope, element, attrs, controller) {
-	      element.on('keydown', function (event) {
-	        if (isNumericKeyCode(event.keyCode) || isForwardSlashKeyCode(event.keyCode) || isNavigationKeycode(event.keyCode)) {
-	          return true;
-	        }
-	        return false;
-	      });
-	    }
-	  }
-	
-	  function isNumericKeyCode(keyCode) {
-	    return (event.keyCode >= 48 && event.keyCode <= 57)
-	        || (event.keyCode >= 96 && event.keyCode <= 105);
-	  }
-	  function isForwardSlashKeyCode(keyCode) {
-	    return event.keyCode === 191;
-	  }
-	  function isNavigationKeycode(keyCode) {
-	    switch (keyCode) {
-	      case 8: //backspace
-	      case 35: //end
-	      case 36: //home
-	      case 37: //left
-	      case 38: //up
-	      case 39: //right
-	      case 40: //down
-	      case 45: //ins
-	      case 46: //del
-	        return true;
-	      default:
-	        return false;
-	    }
-	  }
-	
-	});
-
-
-/***/ },
-/* 19 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -746,7 +823,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 20 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -774,7 +851,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 21 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
