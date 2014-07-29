@@ -74,6 +74,7 @@ require('./controllers/CookieStoreSampleController');
 
 // DIRECTIVES -----------------------------------------------------------------
 require('./controllers/SampleDirectiveController');
+require('./directives/collapsible');
 require('./directives/datekeys');
 require('./directives/eventThumbnail');
 require('./directives/gravatar');

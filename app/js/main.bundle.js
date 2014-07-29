@@ -1,6 +1,6 @@
 /*!
  * AngularJSFundamentals
- * 0.1.0:1406562103300 [development build]
+ * 0.1.0:1406665525024 [development build]
  */
 webpackJsonp([1],[
 /* 0 */
@@ -88,15 +88,16 @@ webpackJsonp([1],[
 	__webpack_require__(18);
 	__webpack_require__(19);
 	__webpack_require__(20);
-	
-	
-	// FILTERS --------------------------------------------------------------------
 	__webpack_require__(21);
 	
 	
-	// SERVICES -------------------------------------------------------------------
+	// FILTERS --------------------------------------------------------------------
 	__webpack_require__(22);
+	
+	
+	// SERVICES -------------------------------------------------------------------
 	__webpack_require__(23);
+	__webpack_require__(24);
 	
 	
 	
@@ -621,6 +622,35 @@ webpackJsonp([1],[
 	
 	var eventsApp = angular.module('eventsApp');
 	
+	eventsApp.directive('collapsible', function () {
+	  return {
+	    restrict: 'E',
+	    replace: true,
+	    transclude: true,
+	    template: '<div><h4 class="well-title" ng-click="toggleVisibility()">{{title}}</h4><div ng-show="visible" ng-transclude></div></div>',
+	    controller: function ($scope) {
+	      $scope.visible = true;
+	
+	      $scope.toggleVisibility = function toggleVisibility () {
+	        $scope.visible = !$scope.visible
+	      }
+	
+	    },
+	    scope: {
+	      title: '@'
+	    }
+	  }
+	});
+
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var eventsApp = angular.module('eventsApp');
+	
 	eventsApp.directive('dateKeys', function () {
 	
 	  return {
@@ -665,7 +695,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -685,7 +715,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -709,7 +739,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -721,8 +751,8 @@ webpackJsonp([1],[
 	    return {
 	      restrict: 'E',
 	      replace: true,
-	      priority: 1,
-	      template: "<button class='btn' ng-click='sayHello()'>Say Hello</button>",
+	      transclude: true,
+	      template: "<div><button class='btn' ng-click='sayHello()'>Say Hello</button><div ng-transclude></div></div>",
 	      controller: function ($scope) {
 	        var greetings = ['Hello']
 	        $scope.sayHello = function () {
@@ -738,9 +768,7 @@ webpackJsonp([1],[
 	  .directive('finnish', function () {
 	    return {
 	      restrict: 'A',
-	      priority: 1,
-	      // terminal: true,
-	      require: 'greeting',
+	      require: '^greeting',
 	      link: function (scope, element, attrs, controller) {
 	        controller.addGreeting('hei');
 	      }
@@ -749,8 +777,7 @@ webpackJsonp([1],[
 	  .directive('hindi', function () {
 	    return {
 	      restrict: 'A',
-	      priority: 2,
-	      require: 'greeting',
+	      require: '^greeting',
 	      link: function (scope, element, attrs, controller) {
 	        controller.addGreeting('sdsdsdd');
 	      }
@@ -759,7 +786,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -778,7 +805,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -799,7 +826,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -823,7 +850,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -851,7 +878,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

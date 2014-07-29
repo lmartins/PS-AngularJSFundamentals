@@ -1,6 +1,6 @@
 /*!
  * AngularJSFundamentals
- * 0.1.0:1406562103300 [development build]
+ * 0.1.0:1406665525024 [development build]
  */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// install a JSONP callback for chunk loading
@@ -101,10 +101,10 @@
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(24);
 	__webpack_require__(25);
 	__webpack_require__(26);
 	__webpack_require__(27);
+	__webpack_require__(28);
 	module.exports = __webpack_require__(9);
 
 
@@ -215,7 +215,7 @@
 
 /***/ },
 
-/***/ 24:
+/***/ 25:
 /***/ function(module, exports, __webpack_require__) {
 
 	var require;/**
@@ -22104,11 +22104,11 @@
 
 /***/ },
 
-/***/ 25:
+/***/ 26:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * @license AngularJS v1.2.21
+	 * @license AngularJS v1.2.20
 	 * (c) 2010-2014 Google, Inc. http://angularjs.org
 	 * License: MIT
 	 */
@@ -22223,8 +22223,8 @@
 	 *
 	 *   - **`action`** – {string} – The name of action. This name becomes the name of the method on
 	 *     your resource object.
-	 *   - **`method`** – {string} – Case insensitive HTTP method (e.g. `GET`, `POST`, `PUT`,
-	 *     `DELETE`, `JSONP`, etc).
+	 *   - **`method`** – {string} – HTTP request method. Valid methods are: `GET`, `POST`, `PUT`,
+	 *     `DELETE`, and `JSONP`.
 	 *   - **`params`** – {Object=} – Optional set of pre-bound parameters for this action. If any of
 	 *     the parameter value is a function, it will be executed every time when a param value needs to
 	 *     be obtained for a request (unless the param was overridden).
@@ -22404,20 +22404,20 @@
 	 * # Creating a custom 'PUT' request
 	 * In this example we create a custom method on our resource to make a PUT request
 	 * ```js
-	 *    var app = angular.module('app', ['ngResource', 'ngRoute']);
+	 *		var app = angular.module('app', ['ngResource', 'ngRoute']);
 	 *
-	 *    // Some APIs expect a PUT request in the format URL/object/ID
-	 *    // Here we are creating an 'update' method
-	 *    app.factory('Notes', ['$resource', function($resource) {
+	 *		// Some APIs expect a PUT request in the format URL/object/ID
+	 *		// Here we are creating an 'update' method
+	 *		app.factory('Notes', ['$resource', function($resource) {
 	 *    return $resource('/notes/:id', null,
 	 *        {
 	 *            'update': { method:'PUT' }
 	 *        });
-	 *    }]);
+	 *		}]);
 	 *
-	 *    // In our controller we get the ID from the URL using ngRoute and $routeParams
-	 *    // We pass in $routeParams and our Notes factory along with $scope
-	 *    app.controller('NotesCtrl', ['$scope', '$routeParams', 'Notes',
+	 *		// In our controller we get the ID from the URL using ngRoute and $routeParams
+	 *		// We pass in $routeParams and our Notes factory along with $scope
+	 *		app.controller('NotesCtrl', ['$scope', '$routeParams', 'Notes',
 	                                      function($scope, $routeParams, Notes) {
 	 *    // First get a note object from the factory
 	 *    var note = Notes.get({ id:$routeParams.id });
@@ -22427,7 +22427,7 @@
 	 *    Notes.update({ id:$id }, note);
 	 *
 	 *    // This will PUT /notes/ID with the note object in the request payload
-	 *    }]);
+	 *		}]);
 	 * ```
 	 */
 	angular.module('ngResource', ['ng']).
@@ -22730,11 +22730,11 @@
 
 /***/ },
 
-/***/ 26:
+/***/ 27:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * @license AngularJS v1.2.21
+	 * @license AngularJS v1.2.20
 	 * (c) 2010-2014 Google, Inc. http://angularjs.org
 	 * License: MIT
 	 */
@@ -23208,7 +23208,9 @@
 	      for (var i = 1, len = m.length; i < len; ++i) {
 	        var key = keys[i - 1];
 	
-	        var val = m[i];
+	        var val = 'string' == typeof m[i]
+	              ? decodeURIComponent(m[i])
+	              : m[i];
 	
 	        if (key && val) {
 	          params[key.name] = val;
@@ -23662,7 +23664,7 @@
 
 /***/ },
 
-/***/ 27:
+/***/ 28:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**

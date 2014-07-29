@@ -1,4 +1,7 @@
 <div class="row">
+  <greeting>
+    <div finnish></div>
+  </greeting>
   <h2 ng-bind-template="{{event.name}} {{ event.date}}"></h2>
   <button type="button" class="btn btn-primary" ng-click="reload()">Reload</button>
   <div class="col-md-4">
@@ -32,12 +35,18 @@
         <upvote
           upvote="upVoteSession(session)"
           downvote="downVoteSession(session)"
-          count="session.upVoteCount" ></upvote>
-        <h4>{{ session.name }}</h4>
-        <h6>{{ session.creatorName }}</h6>
-        <span>Duration: {{ session.duration | durations }}</span>
-        <span>Level: {{ session.level }}</span>
-        <p>{{ session.abstract }}</p>
+          count="session.upVoteCount" >
+        </upvote>
+
+        <div class="well span9">
+          <collapsible title="{{session.name}}">
+            <h6>{{ session.creatorName }}</h6>
+            <span>Duration: {{ session.duration | durations }}</span>
+            <span>Level: {{ session.level }}</span>
+            <p>{{ session.abstract }}</p>
+          </collapsible>
+        </div>
+
 
 
       </li>
