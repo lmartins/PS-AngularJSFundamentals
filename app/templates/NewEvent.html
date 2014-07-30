@@ -5,9 +5,12 @@
   <form name="newEventForm">
     <fieldset>
       <label>Event Name:</label>
-      <input type="text" ng-model="event.name" placeholder="Name of your event..." required >
+      <input type="text" ng-model="event.name" placeholder="Name of your event..." required focus >
       <label>Event Date:</label>
-      <input type="text" ng-model="event.date" date-keys placeholder="format (mm/dd/yyyy)" required ng-pattern="/\d\d/\d\d/\d\d\d\d/" >
+      <div style="position: relative">
+        <input type="text" id="eventDate" ng-model="event.date" date-keys placeholder="format (mm/dd/yyyy)" required ng-pattern="/\d\d/\d\d/\d\d\d\d/" >
+        <date-picker for="eventDate"></date-picker>
+      </div>
       <label>Event Time:</label>
       <input type="text" ng-model="event.time" placeholder="Start and end time..." >
       <label>Event Location:</label>

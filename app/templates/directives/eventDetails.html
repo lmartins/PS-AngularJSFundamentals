@@ -1,0 +1,18 @@
+<div>
+  <greeting>
+    <div finnish></div>
+  </greeting>
+  <h2 ng-bind-template="{{event.name}} {{ event.date}}"></h2>
+  <button type="button" class="btn btn-primary" ng-click="reload()">Reload</button>
+  <div class="col-md-4">
+    <p>{{ event.date }}</p>
+    <p>{{ event.time }}</p>
+  </div>
+
+  <button class="btn" ng-disabled="buttonDisabled">Disabled</button>
+
+  <address class="col-md-4">
+    {{event.location.address}} - {{event.location.city }} - {{event.location.province}}
+  </address>
+  
+</div>

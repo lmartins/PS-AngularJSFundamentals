@@ -111,7 +111,7 @@ var webpackConfig = {
     // require("jquery") is external and available
     //  on the global var jQuery
     // "angular": "angular",
-    "jquery": "jQuery"
+    // "jquery": "jQuery"
   }
 
 };

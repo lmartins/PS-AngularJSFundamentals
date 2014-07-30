@@ -1,6 +1,6 @@
 /*!
  * AngularJSFundamentals
- * 0.1.0:1406665525024 [development build]
+ * 0.1.0:1406725740868 [development build]
  */
 webpackJsonp([1],[
 /* 0 */
@@ -59,6 +59,12 @@ webpackJsonp([1],[
 	        controller: 'SampleDirectiveController'
 	      }
 	    );
+	    $routeProvider.when('/directiveCompileSample',
+	      {
+	        templateUrl: '/templates/DirectiveCompileSample.html'
+	        // controller: 'DirectiveCompileSampleController'
+	      }
+	    );
 	    // $routeProvider.otherwise({redirectTo: '/events'});
 	    // $locationProvider.html5Mode(true);
 	  })
@@ -89,15 +95,21 @@ webpackJsonp([1],[
 	__webpack_require__(19);
 	__webpack_require__(20);
 	__webpack_require__(21);
+	__webpack_require__(22);
+	__webpack_require__(23);
+	__webpack_require__(24);
+	__webpack_require__(25);
+	__webpack_require__(26);
 	
 	
 	// FILTERS --------------------------------------------------------------------
-	__webpack_require__(22);
+	__webpack_require__(27);
 	
 	
 	// SERVICES -------------------------------------------------------------------
-	__webpack_require__(23);
-	__webpack_require__(24);
+	__webpack_require__(28);
+	__webpack_require__(29);
+	__webpack_require__(30);
 	
 	
 	
@@ -702,6 +714,111 @@ webpackJsonp([1],[
 	
 	var eventsApp = angular.module('eventsApp');
 	
+	eventsApp.directive('datePicker', function () {
+	
+	  return {
+	    restrict: 'E',
+	    templateUrl: '/templates/directives/datepicker.html',
+	    controller: function ($scope, calendarHelper) {
+	      $scope.showDatePicker = false;
+	
+	      $scope.calendar = {
+	        year: new Date().getFullYear(),
+	        month: new Date().getMonth(),
+	        monthName: calendarHelper.getMonthName(new Date().getMonth())
+	      };
+	
+	      $scope.days = calendarHelper.getCalendarDays(new Date().getFullYear(), new Date().getMonth());
+	
+	      $scope.nextMonth = function() {
+	        calendarHelper.incrementCalendarMonth($scope.calendar);
+	        $scope.calendar.monthName = calendarHelper.getMonthName($scope.calendar.month);
+	        $scope.days = calendarHelper.getCalendarDays($scope.calendar.year, $scope.calendar.month);
+	      }
+	
+	      $scope.previousMonth = function() {
+	        calendarHelper.decrementCalendarMonth($scope.calendar);
+	        $scope.calendar.monthName = calendarHelper.getMonthName($scope.calendar.month);
+	        $scope.days = calendarHelper.getCalendarDays($scope.calendar.year, $scope.calendar.month);
+	      }
+	
+	      $scope.nextYear = function() {
+	        $scope.calendar.year++;
+	        $scope.days = calendarHelper.getCalendarDays($scope.calendar.year, $scope.calendar.month);
+	      }
+	
+	      $scope.previousYear = function() {
+	        $scope.calendar.year--;
+	        $scope.days = calendarHelper.getCalendarDays($scope.calendar.year, $scope.calendar.month);
+	      }
+	
+	      $scope.selectDate = function(day) {
+	        $scope.element.val(($scope.calendar.month + 1) + "/" + day + "/" + +$scope.calendar.year);
+	        $scope.showDatePicker = false;
+	      }
+	
+	    },
+	
+	    link: function (scope, element, attrs, controller) {
+	      var forElement = angular.element("#" + attrs.for);
+	      scope.element = forElement;
+	
+	      forElement.on('focus', function () {
+	        scope.$apply(function () {
+	          scope.showDatePicker = true;
+	        })
+	      });
+	
+	      angular.element('body').on('click', function () {
+	        scope.$apply( function () {
+	          scope.showDatePicker = false;
+	        })
+	      });
+	
+	      forElement.on('click', function (event) {
+	        event.stopPropagation();
+	      });
+	
+	      angular.element('.calendar-nav').on('click', function (event) {
+	        event.stopPropagation(); // keep the datepicker open
+	      });
+	    }
+	
+	  }
+	
+	});
+
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var eventsApp = angular.module('eventsApp');
+	
+	eventsApp.directive('eventDetails', function () {
+	  return {
+	    restrict: 'E',
+	    replace: true,
+	    templateUrl: "/templates/directives/eventDetails.html",
+	    scope: {
+	      event: '=',
+	      editable: '=',
+	      edit: '&'
+	    }
+	  }
+	});
+
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var eventsApp = angular.module('eventsApp');
+	
 	eventsApp.directive('eventThumbnail', function () {
 	  return {
 	    restrict: 'E',
@@ -715,7 +832,25 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 18 */
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var eventsApp = angular.module('eventsApp');
+	
+	eventsApp.directive('focus', function () {
+	  return {
+	    restrict: 'A',
+	    link: function (scope, element, attrs, controller) {
+	      angular.element(element).focus();
+	    }
+	  }
+	});
+
+
+/***/ },
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -739,7 +874,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 19 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -786,7 +921,57 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 20 */
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var eventsApp = angular.module('eventsApp');
+	
+	eventsApp.directive('repeatX', function () {
+	  return {
+	    compile: function (element, attributes) {
+	
+	      for (var i = 0; i < Number(attributes.repeatX) - 1; i++) {
+	        element.after(element.clone().attr('repeat-x', 0));
+	      }
+	      return function (scope, element, attributes, controller) {
+	        attributes.$observe('text', function (newValue) {
+	          if (newValue === 'Hello World') {
+	            element.css('color', 'red');
+	          }
+	        })
+	      }
+	
+	
+	    }
+	  };
+	});
+
+
+/***/ },
+/* 24 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var eventsApp = angular.module('eventsApp');
+	
+	eventsApp.directive('sessionThumbnail', function () {
+	  return {
+	    restrict: 'E',
+	    templateUrl: "/templates/directives/sessionDetails.html",
+	    scope: {
+	      session: '=',
+	      editable: '=',
+	      edit: '&'
+	    }
+	  }
+	});
+
+
+/***/ },
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -805,7 +990,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 21 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -826,7 +1011,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 22 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -850,7 +1035,53 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 23 */
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	var eventsApp = angular.module('eventsApp');
+	
+	eventsApp.factory('calendarHelper', function () {
+	    var monthNames = [ "January", "February", "March", "April", "May", "June",
+	        "July", "August", "September", "October", "November", "December" ];
+	
+	    return {
+	        incrementCalendarMonth: function(calendar) {
+	            if (calendar.month === 11) {
+	                calendar.month = 0;
+	                calendar.year++;
+	            } else {
+	                calendar.month++;
+	            }
+	        },
+	        decrementCalendarMonth: function(calendar) {
+	            if (calendar.month === 0) {
+	                calendar.month = 11;
+	                calendar.year--;
+	            } else {
+	                calendar.month--;
+	            }
+	        },
+	        getCalendarDays: function (year, month) {
+	            var monthStartDate = new Date(year, month, 1);
+	            var days = [];
+	            for (var idx = 0; idx < monthStartDate.getDay(); idx++) {
+	                days.push('');
+	            }
+	            for (var idx = 1; idx <= new Date(year, month+1, 0).getDate(); idx++) {
+	                days.push(idx);
+	            }
+	            return days;
+	        },
+	        getMonthName: function(monthNumber) {
+	            return monthNames[monthNumber];
+	        }
+	    }
+	});
+
+
+/***/ },
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -878,7 +1109,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 24 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

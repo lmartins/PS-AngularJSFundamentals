@@ -51,6 +51,12 @@ var eventsApp = angular.module('eventsApp', ['ngSanitize', 'ngResource', 'ngCook
         controller: 'SampleDirectiveController'
       }
     );
+    $routeProvider.when('/directiveCompileSample',
+      {
+        templateUrl: '/templates/DirectiveCompileSample.html'
+        // controller: 'DirectiveCompileSampleController'
+      }
+    );
     // $routeProvider.otherwise({redirectTo: '/events'});
     // $locationProvider.html5Mode(true);
   })
@@ -76,9 +82,14 @@ require('./controllers/CookieStoreSampleController');
 require('./controllers/SampleDirectiveController');
 require('./directives/collapsible');
 require('./directives/datekeys');
+require('./directives/datepicker');
+require('./directives/eventDetails');
 require('./directives/eventThumbnail');
+require('./directives/focus');
 require('./directives/gravatar');
 require('./directives/greeting');
+require('./directives/repeatX');
+require('./directives/sessionThumbnail');
 require('./directives/mySample');
 require('./directives/upvote');
 
@@ -88,6 +99,7 @@ require('./filters');
 
 
 // SERVICES -------------------------------------------------------------------
+require('./services/calendarHelper');
 require('./services/EventData');
 require('./services/GravatarUrlBuilder');
 
